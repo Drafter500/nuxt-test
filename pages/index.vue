@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/20/solid';
+
 
 const data = [
   {id: '1', title: 'one', description: 'descr 1', author: 'author1'},
@@ -27,7 +29,7 @@ const data = [
           </svg>
         </label>
       </form>
-      <NuxtLink to="posts">
+      <NuxtLink to="/posts/new">
         <button class="btn">Create new post</button>
       </NuxtLink>
     </div>
@@ -38,15 +40,24 @@ const data = [
         <th>Name</th>
         <th>Description</th>
         <th>Author</th>
-        <th class="w-12">Actions</th>
+        <th class="w-60">Actions</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="item in data" :key="item.title">
-        <td><NuxtLink :to="`/posts/${item.id}`">{{item.title}}</NuxtLink></td>
+        <td><NuxtLink class="link" :to="`/posts/${item.id}`">{{item.title}}</NuxtLink></td>
         <td>{{item.description}}</td>
         <td>{{item.author}}</td>
-        <td><Actions /></td>
+        <td>
+          <button class="btn btn-sm btn-outline" >
+            <PencilSquareIcon class="size-5" />
+            Edit
+          </button>
+          <button class="ml-3 btn btn-sm btn-outline btn-error">
+            <TrashIcon class="size-5" />
+            Delete
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>
