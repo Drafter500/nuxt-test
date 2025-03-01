@@ -1,3 +1,5 @@
+import type { TUser } from '../users';
+
 type TRawPost = {
   id: string,
   title: string,
@@ -5,16 +7,11 @@ type TRawPost = {
   userId: string,
 }
 
-type TUser = {
-  id: string,
-  name: string,
-}
-
 export type TPost = TRawPost & {userName: string};
 
 export default defineEventHandler(async event => {
   const posts = await $fetch<TRawPost[]>('https://jsonplaceholder.typicode.com/posts');
-  const users = await $fetch<TUser[]>('https://jsonplaceholder.typicode.com/users');
+  const users = await $fetch<TUser[]>('/api/users');
 
   // Add username to each post
   // of course this is not how things should work, the posts endpoint should ideally get the

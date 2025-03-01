@@ -38,22 +38,24 @@ async function handleDelete(id: string) {
         <td>{{item.body}}</td>
         <td>{{item.userName}}</td>
         <td>
-          <NuxtLink
-            :to="`/posts/${item.id}`"
-            class="link inline-flex gap-2"
-          >
-            <PencilSquareIcon class="size-5" />
-            Edit
-          </NuxtLink>
-          <button
-            class="ml-5 btn btn-sm btn-outline btn-error"
-            @click="handleDelete(item.id)"
-            :disabled="deletingId === item.id"
-          >
-            <span v-if="deletingId === item.id" class="loading loading-spinner loading-sm"></span>
-            <TrashIcon v-else class="size-5" />
-            Delete
-          </button>
+          <div class="flex items-center">
+            <NuxtLink
+              :to="`/posts/${item.id}`"
+              class="link inline-flex gap-2"
+            >
+              <PencilSquareIcon class="size-5" />
+              Edit
+            </NuxtLink>
+            <button
+              class="ml-5 btn btn-sm btn-outline btn-error"
+              @click="handleDelete(item.id)"
+              :disabled="deletingId === item.id"
+            >
+              <span v-if="deletingId === item.id" class="loading loading-spinner loading-sm"></span>
+              <TrashIcon v-else class="size-5" />
+              Delete
+            </button>
+          </div>
         </td>
       </tr>
     </transition-group>

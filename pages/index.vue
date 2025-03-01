@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TPost } from '../server/api/posts';
 
-const { data, error, refresh } = await useFetch<TPost[]>('/api/posts');
+const { data } = await useFetch<TPost[]>('/api/posts');
 
 </script>
 
