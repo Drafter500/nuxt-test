@@ -6,6 +6,7 @@ const { posts } = defineProps<{
     title: string,
     body: string,
     userId: string,
+    userName: string,
   }
 }>();
 
@@ -25,7 +26,7 @@ const { posts } = defineProps<{
     <tr v-for="item in posts" :key="item.id">
       <td><NuxtLink class="link" :to="`/posts/${item.id}`">{{item.title}}</NuxtLink></td>
       <td>{{item.body}}</td>
-      <td>{{item.userId}}</td>
+      <td>{{item.userName}}</td>
       <td>
         <button class="btn btn-sm btn-outline" >
           <PencilSquareIcon class="size-5" />
