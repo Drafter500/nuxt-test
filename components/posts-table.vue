@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/20/solid';
+import type { TPost } from '~/server/api/posts';
+
+
 const { posts } = defineProps<{
-  posts?: {
-    id: string,
-    title: string,
-    body: string,
-    userId: string,
-    userName: string,
-  }
+  posts?: TPost[]
 }>();
 
 const deletingId = ref<string | null>(null);
-const displayedPosts = ref(posts);
+const displayedPosts = ref<TPost[] | undefined>(posts);
 
 async function handleDelete(id: string) {
   if (!confirm(`Are you sure you want to delete post ${id}?`)) {
@@ -20,7 +17,7 @@ async function handleDelete(id: string) {
   deletingId.value = id;
   await useFetch(`/api/posts/${id}`, {method: 'DELETE'});
   deletingId.value = null;
-  displayedPosts.value = displayedPosts.value.filter(x => x.id !== id);
+  displayedPosts.value = displayedPosts.value?.filter(x => x.id !== id);
 }
 
 </script>
@@ -32,7 +29,7 @@ async function handleDelete(id: string) {
       <th>Name</th>
       <th>Description</th>
       <th>Author</th>
-      <th class="w-60">Actions</th>
+      <th class="w-52">Actions</th>
     </tr>
     </thead>
     <transition-group tag="tbody" name="fade">
@@ -41,12 +38,15 @@ async function handleDelete(id: string) {
         <td>{{item.body}}</td>
         <td>{{item.userName}}</td>
         <td>
-          <button class="btn btn-sm btn-outline">
+          <NuxtLink
+            :to="`/posts/${item.id}`"
+            class="link inline-flex gap-2"
+          >
             <PencilSquareIcon class="size-5" />
             Edit
-          </button>
+          </NuxtLink>
           <button
-            class="ml-3 btn btn-sm btn-outline btn-error"
+            class="ml-5 btn btn-sm btn-outline btn-error"
             @click="handleDelete(item.id)"
             :disabled="deletingId === item.id"
           >

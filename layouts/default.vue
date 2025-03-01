@@ -1,6 +1,6 @@
 <template>
   <NuxtLoadingIndicator />
-  <div class="flex flex-col max-w-7xl h-screen mx-auto p-4 sm:py-8">
+  <div class="flex flex-col max-w-6xl h-screen mx-auto p-4 sm:py-8">
     <header class="flex justify-end">
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn m-1">
