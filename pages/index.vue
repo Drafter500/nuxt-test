@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/20/solid';
 
-
-const data = [
-  {id: '1', title: 'one', description: 'descr 1', author: 'author1'},
-  {id: '2', title: 'two', description: 'descr 2', author: 'author2'},
-  {id: '3', title: 'three', description: 'descr 3', author: 'author3'},
-  {id: '4', title: 'four', description: 'descr 4', author: 'author4'},
-]
+const { data, error, refresh } = await useFetch('https://jsonplaceholder.typicode.com/posts');
 
 </script>
 
 <template>
-  <div class="flex flex-col gap-6 mt-6">
+  <div class="flex flex-col gap-6 mt-6 min-h-0 h-full">
     <div class="flex justify-between">
       <form>
         <label class="input input-bordered flex items-center gap-2 w-96">
@@ -33,34 +26,9 @@ const data = [
         <button class="btn">Create new post</button>
       </NuxtLink>
     </div>
-    <table class="table table-zebra">
-      <!-- head -->
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Author</th>
-        <th class="w-60">Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="item in data" :key="item.title">
-        <td><NuxtLink class="link" :to="`/posts/${item.id}`">{{item.title}}</NuxtLink></td>
-        <td>{{item.description}}</td>
-        <td>{{item.author}}</td>
-        <td>
-          <button class="btn btn-sm btn-outline" >
-            <PencilSquareIcon class="size-5" />
-            Edit
-          </button>
-          <button class="ml-3 btn btn-sm btn-outline btn-error">
-            <TrashIcon class="size-5" />
-            Delete
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="overflow-y-auto">
+      <PostsTable :posts="data" />
+    </div>
   </div>
 </template>
 
