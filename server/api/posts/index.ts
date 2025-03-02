@@ -1,5 +1,5 @@
 import type { TUser } from '../users';
-import type { TRawPost } from '../posts/types';
+import type { TRawPost } from './types';
 
 
 export default defineEventHandler(async () => {
