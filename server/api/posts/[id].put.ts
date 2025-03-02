@@ -1,0 +1,12 @@
+export default defineEventHandler(async event => {
+  // Simulates slow server, so we could see loading status
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
+  const id = getRouterParam(event, 'id');
+  const body = await readBody(event);
+  console.log(body);
+  return $fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    method: 'PUT',
+    body,
+  });
+})
