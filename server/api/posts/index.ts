@@ -3,8 +3,10 @@ import type { TRawPost } from '../posts/types';
 
 
 export default defineEventHandler(async () => {
-  const posts = await $fetch<TRawPost[]>('https://jsonplaceholder.typicode.com/posts');
-  const users = await $fetch<TUser[]>('/api/users');
+  const [ posts, users ] = await Promise.all([
+    $fetch<TRawPost[]>('https://jsonplaceholder.typicode.com/posts'),
+    $fetch<TUser[]>('/api/users'),
+  ]);
 
   // Add username to each post
   // of course this is not how things should work, the posts endpoint should ideally get the
