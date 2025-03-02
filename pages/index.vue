@@ -1,17 +1,32 @@
 <script setup lang="ts">
-import type { TPost } from '../server/api/posts/types';
+import type { TPost } from '~/server/api/posts/types';
 
 const { data } = await useFetch<TPost[]>('/api/posts');
+
+const searchText = ref('');
+const isLoading = ref(false);
+
+async function handleSearch() {
+  isLoading.value = true;
+  // The api does not support this, but this is the idea
+  data.value = (await useFetch<TPost[]>(`/api/posts?q=${searchText}`)).data;
+  isLoading.value = false;
+
+  // With a bit more time I would place a skeleton table loader instead of just spinner in the input
+  // And also reflect the search param in the url
+}
 
 </script>
 
 <template>
   <div class="flex flex-col gap-6 mt-6 min-h-0 h-full">
     <div class="flex justify-between">
-      <form>
+      <form @submit.prevent="handleSearch">
         <label class="input input-bordered flex items-center gap-2 w-96">
-          <input type="text" class="grow" placeholder="Search" />
+          <input type="search" class="grow" v-model="searchText" placeholder="Search" />
+          <span v-if="isLoading" class="loading loading-spinner loading-sm"></span>
           <svg
+            v-else
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
             fill="currentColor"
