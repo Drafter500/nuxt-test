@@ -16,6 +16,7 @@ const formData = reactive({
 
 const validationErrors = reactive({
   title: '',
+  author: '',
   body: '',
 });
 
@@ -23,6 +24,7 @@ const isPending = ref(false);
 
 async function handleSubmit() {
   validationErrors.title = formData.title ? '' : 'Title is required';
+  validationErrors.author = formData.author ? '' : 'Author is required';
   validationErrors.body = formData.body ? '' : 'Body is required';
 
   if (Object.values(validationErrors).some(Boolean)) {
@@ -60,11 +62,19 @@ async function handleSubmit() {
       >{{ validationErrors.title }}</p>
 
       <label class="fieldset-legend">Author</label>
-      <select class="select w-full" v-model="formData.author">
+      <select
+        class="select w-full"
+        :class="{'border-error': validationErrors.author}"
+        v-model="formData.author"
+      >
         <option v-for="author in authors || []" :key="author.id" :value="author.id">
           {{ author.name }}
         </option>
       </select>
+      <p
+        v-if="validationErrors.author"
+        class="fieldset-label text-error"
+      >{{ validationErrors.author }}</p>
 
       <label class="fieldset-legend">Body</label>
       <!-- With more time would put WYSIWYG editor instead of textarea -->
