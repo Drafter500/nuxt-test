@@ -37,3 +37,5 @@ honestly not impressed by the look of it, but it does the job and is simple.
 - Would like to also add github actions with tests, linting, type-checking
 - The listing page would be normally supported by pagination or infinite scrolling. Now it just
 shows the first 100 items.
+- Textarea is of course not a good way to edit the blog body, a proper WYSIWYG or some kind of
+rich text editor would be needed
