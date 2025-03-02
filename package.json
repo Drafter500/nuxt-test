@@ -4,6 +4,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "test": "playwright test",
+    "test-ui": "playwright test --ui",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -12,6 +14,8 @@
     "@nuxt/devtools": "^1.0.3",
     "@nuxt/eslint": "^1.1.0",
     "@nuxtjs/tailwindcss": "^6.13.1",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.13.8",
     "daisyui": "^5.0.0",
     "nuxt": "^3.8.2",
     "tailwindcss": "^4.0.9",

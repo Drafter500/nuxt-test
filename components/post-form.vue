@@ -16,7 +16,6 @@ const formData = reactive({
 const isPending = ref(false);
 
 async function handleSubmit() {
-  console.log(formData);
   isPending.value = true;
   await $fetch(`/api/posts/${id ?? ''}`, {
     method: id ? 'PUT' : 'POST',
@@ -25,7 +24,6 @@ async function handleSubmit() {
 
   isPending.value = false;
 
-  console.log(formData.author);
   await navigateTo('/');
 }
 
@@ -37,6 +35,7 @@ async function handleSubmit() {
       <label class="fieldset-legend">Title</label>
       <input
         type="text"
+        name="title"
         class="input w-full"
         placeholder="Post title..."
         v-model="formData.title"
