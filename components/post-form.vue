@@ -11,11 +11,24 @@ const { id, authors, title, body, userId } = defineProps<{
 const formData = reactive({
   title,
   body,
-  author: authors.find(author => author.id === userId)?.id,
+  author: authors?.find(author => author.id === userId)?.id,
 });
+
+const validationErrors = reactive({
+  title: '',
+  body: '',
+});
+
 const isPending = ref(false);
 
 async function handleSubmit() {
+  validationErrors.title = formData.title ? '' : 'Title is required';
+  validationErrors.body = formData.body ? '' : 'Body is required';
+
+  if (Object.values(validationErrors).some(Boolean)) {
+    return;
+  }
+
   isPending.value = true;
   await $fetch(`/api/posts/${id ?? ''}`, {
     method: id ? 'PUT' : 'POST',
@@ -37,9 +50,14 @@ async function handleSubmit() {
         type="text"
         name="title"
         class="input w-full"
+        :class="{'border-error': validationErrors.title}"
         placeholder="Post title..."
         v-model="formData.title"
       />
+      <p
+        v-if="validationErrors.title"
+        class="fieldset-label text-error"
+      >{{ validationErrors.title }}</p>
 
       <label class="fieldset-legend">Author</label>
       <select class="select w-full" v-model="formData.author">
@@ -52,9 +70,14 @@ async function handleSubmit() {
       <!-- With more time would put WYSIWYG editor instead of textarea -->
       <textarea
         class="textarea w-full h-48"
+        :class="{'border-error': validationErrors.body}"
         placeholder="Bio"
         v-model="formData.body"
       ></textarea>
+      <p
+        v-if="validationErrors.body"
+        class="fieldset-label text-error"
+      >{{ validationErrors.body }}</p>
 
       <button class="btn btn-neutral mt-4 ml-auto" :disabled="isPending">
         <span v-if="isPending" class="loading loading-spinner loading-sm"></span>
