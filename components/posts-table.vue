@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/20/solid';
-import type { TPost } from '~/server/api/posts';
+import type { TPost } from '~/server/api/posts/types';
 
 
 const { posts } = defineProps<{

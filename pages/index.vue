@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TPost } from '../server/api/posts';
+import type { TPost } from '../server/api/posts/types';
 
 const { data } = await useFetch<TPost[]>('/api/posts');
 

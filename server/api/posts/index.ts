@@ -1,15 +1,8 @@
 import type { TUser } from '../users';
+import type { TRawPost } from '../posts/types';
 
-type TRawPost = {
-  id: string,
-  title: string,
-  body: string,
-  userId: string,
-}
 
-export type TPost = TRawPost & {userName: string};
-
-export default defineEventHandler(async event => {
+export default defineEventHandler(async () => {
   const posts = await $fetch<TRawPost[]>('https://jsonplaceholder.typicode.com/posts');
   const users = await $fetch<TUser[]>('/api/users');
 
